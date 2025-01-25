@@ -1,0 +1,24 @@
+title: Hello, je suis Inestimable
+description: Lorem Ipsum
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+theme: null
+
+# Sass settings
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+#variables
+intro: "Bienvenue dans mon univers"
+greeting: "Hello,"
+catchphrase: "je suis Inestimable"
+instagram_username: "inestimable9_"

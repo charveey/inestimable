@@ -1,0 +1,35 @@
+require 'yaml'
+require 'open3'
+
+module InstagramScraper
+  class Generator < Jekyll::Generator
+    safe true
+    priority :high
+
+    def generate(site)
+      # Path to Python scraping script
+      scraper_path = File.join(site.source, 'scrape_instagram.py')
+      
+      # Instagram username (can be configured in _config.yml)
+      username = site.config['instagram_username'] || 'default_username'
+      
+      # Output path for bestsellers data
+      output_path = File.join(site.source, '_data', 'dump.yml')
+      
+      # Run Python scraping script
+      begin
+        output, status = Open3.capture2e("python3 #{scraper_path} #{username} #{output_path}")
+        
+        if status.success?
+          Jekyll.logger.info "Instagram Scraper:", "Successfully scraped posts for #{username}"
+          Jekyll.logger.debug output
+        else
+          Jekyll.logger.error "Instagram Scraper:", "Failed to scrape posts"
+          Jekyll.logger.error output
+        end
+      rescue StandardError => e
+        Jekyll.logger.error "Instagram Scraper:", "Error during scraping: #{e.message}"
+      end
+    end
+  end
+end
